@@ -1,0 +1,42 @@
+#
+# Copyright (c) 2022 Lars Øvergård
+#
+# Copyright (c) 2020 Nordic Semiconductor ASA
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+menu "Water quality firmware settings"
+
+config LTE_POWER_SAVING_MODE
+	bool "Request Power Saving Mode (PSM) from cellular network"
+
+config WATER_QA_WATCHDOG_TIMEOUT_MSEC
+	int "Watchdog timeout in milliseconds"
+	default 60000 # TODO: Change this to better suit your usecase.
+
+config SENSOR_DEV_NAME
+	string "Sensor device name"
+	help
+	  Sensor data will be 
+	  fetched and sent to nRF Cloud.
+
+config SENSOR_USAGE
+	bool "Enables the use of sensors"
+
+config APPLICATION_WORKQUEUE_STACK_SIZE
+	int "Application workqueue stack size"
+	default 4096
+
+config APPLICATION_WORKQUEUE_PRIORITY
+	int "Application workqueue priority"
+	default SYSTEM_WORKQUEUE_PRIORITY
+
+endmenu
+
+menu "Zephyr Kernel"
+source "Kconfig.zephyr"
+endmenu
+
+module = WATER_QA
+module-str = Water quality firmware
+source "${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
